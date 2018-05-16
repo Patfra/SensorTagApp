@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/SensorTagApp.dir/main.cpp.o  -o SensorTagApp 
