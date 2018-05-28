@@ -1,2 +1,4 @@
 .idea
-gattlib
+OLD
+gattlib/build
+cmake-build-debug
