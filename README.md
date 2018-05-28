@@ -6,6 +6,9 @@
 Żeby zbildować należy otworzyć terminal i wpisać:
 
 cd gattlib/build
+
+cmake ..
+
 make
 
 

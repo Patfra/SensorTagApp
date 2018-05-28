@@ -84,9 +84,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/patryk/Dokumenty/SensorTagApp/main.cpp">
-			<Option target="SensorTagApp"/>
-		</Unit>
 		<Unit filename="/home/patryk/Dokumenty/SensorTagApp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
