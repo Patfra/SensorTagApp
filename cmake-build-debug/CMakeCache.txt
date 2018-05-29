@@ -200,6 +200,9 @@ SensorTagApp_BINARY_DIR:STATIC=/home/patryk/Dokumenty/SensorTagApp/cmake-build-d
 //Value Computed by CMake
 SensorTagApp_SOURCE_DIR:STATIC=/home/patryk/Dokumenty/SensorTagApp
 
+//Dependencies for target
+libgattlib.so_LIB_DEPENDS:STATIC=
+
 
 ########################
 # INTERNAL cache entries

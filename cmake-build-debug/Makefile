@@ -123,6 +123,60 @@ SensorTagApp/fast:
 	$(MAKE) -f CMakeFiles/SensorTagApp.dir/build.make CMakeFiles/SensorTagApp.dir/build
 .PHONY : SensorTagApp/fast
 
+conversions.o: conversions.cpp.o
+
+.PHONY : conversions.o
+
+# target to build an object file
+conversions.cpp.o:
+	$(MAKE) -f CMakeFiles/SensorTagApp.dir/build.make CMakeFiles/SensorTagApp.dir/conversions.cpp.o
+.PHONY : conversions.cpp.o
+
+conversions.i: conversions.cpp.i
+
+.PHONY : conversions.i
+
+# target to preprocess a source file
+conversions.cpp.i:
+	$(MAKE) -f CMakeFiles/SensorTagApp.dir/build.make CMakeFiles/SensorTagApp.dir/conversions.cpp.i
+.PHONY : conversions.cpp.i
+
+conversions.s: conversions.cpp.s
+
+.PHONY : conversions.s
+
+# target to generate assembly for a file
+conversions.cpp.s:
+	$(MAKE) -f CMakeFiles/SensorTagApp.dir/build.make CMakeFiles/SensorTagApp.dir/conversions.cpp.s
+.PHONY : conversions.cpp.s
+
+main.o: main.cpp.o
+
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/SensorTagApp.dir/build.make CMakeFiles/SensorTagApp.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/SensorTagApp.dir/build.make CMakeFiles/SensorTagApp.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/SensorTagApp.dir/build.make CMakeFiles/SensorTagApp.dir/main.cpp.s
+.PHONY : main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -132,6 +186,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... SensorTagApp"
+	@echo "... conversions.o"
+	@echo "... conversions.i"
+	@echo "... conversions.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 
