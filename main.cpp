@@ -2,13 +2,11 @@
 // Created by patryk on 28.05.18.
 //
 
-#include <stdio.h>
-#include <stdlib.h>
-
+#include <iostream>
 #include "conversions.h"
 
 #include "gattlib/include/gattlib.h"// TO DO ogarnąć bibliotekę
-
+using namespace std;
 typedef enum { READ, WRITE} operation_t;
 operation_t g_operation;
 
@@ -18,15 +16,15 @@ long int value_data;
 
 
 static void usage(char *argv[]) {
-    printf("%s <device_address> <read|write> <uuid> [<hex-value-to-write>]\n", argv[0]);
+    cout <<  argv[0] << " <device_address> <read|write> <uuid> [<hex-value-to-write>]\n";
 }
 
 int main(int argc, char *argv[]) {
 
     uint32_t A;
-    scanf("%d", &A);
+    cin >> A;
     float B = BaroConvert(A);
-    printf("%f", B);
+    cout << B;
     return 0;
 }
 
