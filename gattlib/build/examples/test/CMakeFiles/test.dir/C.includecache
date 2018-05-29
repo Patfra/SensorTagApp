@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/gattlib.h
+stdint.h
+-
+bluetooth/bluetooth.h
+-
+bluetooth/sdp.h
+-
+bluetooth/sdp_lib.h
+-
+
+/home/patryk/Dokumenty/SensorTagApp/gattlib/examples/test/conversions.c
+conversions.h
+/home/patryk/Dokumenty/SensorTagApp/gattlib/examples/test/conversions.h
+
+/home/patryk/Dokumenty/SensorTagApp/gattlib/examples/test/conversions.h
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+
+/home/patryk/Dokumenty/SensorTagApp/gattlib/examples/test/test.c
+stdio.h
+-
+stdlib.h
+-
+conversions.h
+/home/patryk/Dokumenty/SensorTagApp/gattlib/examples/test/conversions.h
+gattlib.h
+/home/patryk/Dokumenty/SensorTagApp/gattlib/examples/test/gattlib.h
+

@@ -1,0 +1,1 @@
+/usr/bin/cc   -Wall   CMakeFiles/test.dir/conversions.c.o CMakeFiles/test.dir/test.c.o  -o test  -L/home/patryk/Dokumenty/SensorTagApp/gattlib/build/dbus -Wl,-rpath,/home/patryk/Dokumenty/SensorTagApp/gattlib/build/dbus -rdynamic ../../dbus/libgattlib.so -lglib-2.0 -lgattlib -lglib-2.0 -lpcre -lpthread -lgio-2.0 -lgobject-2.0 -lglib-2.0 
