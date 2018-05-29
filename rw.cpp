@@ -45,17 +45,21 @@ SensorTag* read_config(int * sensor_amount)
 {
     ifstream file;
     string data;
-    static SensorTag records[2]; // TODO na sztywno ilosc
     int i=0;
     file.open ("../sensorconfig.csv");
     if (file.is_open())
     {
-        getline(file, data); // ignore first two lines
         getline(file, data);
+        istringstream iss(data);
+        string token;
+        getline(iss, token, ',');
+        getline(iss, token, ',');
+        *sensor_amount = stoi(token);
+        static SensorTag records[2];
+        getline(file, data); // ignore second line
         while (getline(file, data))
         {
             istringstream iss(data);
-            string token;
             getline(iss, token, ',');
             getline(iss, token, ',');
             records[i].IP = token;
@@ -83,7 +87,6 @@ SensorTag* read_config(int * sensor_amount)
             records[i].OptPer = stoi(token);
             i++;
         }
-        *sensor_amount = i;
         return records;
     }
     else
