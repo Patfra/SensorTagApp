@@ -4,15 +4,13 @@
 
 #include <iostream>
 #include "conversions.h"
-
+#include "rw.h"
 #include "gattlib/include/gattlib.h"// TO DO ogarnąć bibliotekę
 using namespace std;
 typedef enum { READ, WRITE} operation_t;
 operation_t g_operation;
-
 static uuid_t g_uuid;
 long int value_data;
-
 
 
 static void usage(char *argv[]) {
@@ -22,9 +20,23 @@ static void usage(char *argv[]) {
 int main(int argc, char *argv[]) {
 
     uint32_t A;
+    cout << "Podaj liczbe elo:\n";
     cin >> A;
     float B = BaroConvert(A);
     cout << B;
+    float bufor[] = {12.5, 123.34, 67.3, 45.3, 22.0, 45.93, 456.6, 33.67};
+    bool flaga = 0;
+    int j;
+    SensorTag *test;
+    for (j=0; j<10; j++)
+    {
+        write(bufor, flaga);
+    }
+    test = read_config();
+    for (j=0; j<2; j++)
+    {
+        cout << test[j].IP << " " << test[j].TempConf << " " << test[j].MovPer << endl;
+    }
     return 0;
 }
 
