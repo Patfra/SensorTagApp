@@ -5,13 +5,11 @@
 using namespace std;
 #include "rw.h"
 
-void write (float buff[], bool flag) {
+void write (float buff[], bool flag, int ST_number, string ST_IP) {
     fstream file;
     int i;
     int end;
-    int numer = 2;      // TODO skad to bedzie brane?
-    char ajpi[] = "192.168.123.45"; // i to
-    file.open ("/home/michal/SensorTagApp/ST_"+ std::to_string(numer) + "_data_out.csv" , ios::app); // TODO jest na sztywno bo CLion jest zjebany
+    file.open ("../ST_"+ std::to_string(ST_number) + "_data_out.csv" , ios::app);
     if (file.is_open())
     {
         chrono::system_clock::time_point now = chrono::system_clock::now();
@@ -22,7 +20,7 @@ void write (float buff[], bool flag) {
         end = file.tellg();
         if (end == 0)
         {
-            file << "Data from SensorTag nr " << numer << " ., " << ajpi << "\n";
+            file << "Data from SensorTag nr " << ST_number << " ., " << ST_IP << "\n";
             if (flag == 0)
             {
                 file << "Timestamp, ObjectTemp, AmbienceTemp, GyroX, GyroY, GyroZ, Humidity, Pressure, Brightness\n";
@@ -40,16 +38,16 @@ void write (float buff[], bool flag) {
         file << endl;
         file.close();
     }
-    else cout << "Unable to open file";
+    else cout << "Unable to open file" << endl;
 }
 
-SensorTag* read_config()
+SensorTag* read_config(int * sensor_amount)
 {
     ifstream file;
     string data;
     static SensorTag records[2]; // TODO na sztywno ilosc
     int i=0;
-    file.open ("/home/michal/SensorTagApp/sensorconfig.csv"); // TODO jest na sztywno bo CLion jest zjebany
+    file.open ("../sensorconfig.csv");
     if (file.is_open())
     {
         getline(file, data); // ignore first two lines
@@ -85,28 +83,12 @@ SensorTag* read_config()
             records[i].OptPer = stoi(token);
             i++;
         }
+        *sensor_amount = i;
         return records;
     }
     else
     {
-        cout << "Unable to open file";
+        cout << "Unable to open file" << endl;
         return NULL;
     }
 }
-
-
-//int main() {
-//    float bufor[] = {12.5, 123.34, 67.3, 45.3, 22.0, 45.93, 456.6, 33.67};
-//    bool flaga = 0;
-//    int j;
-//    SensorTag *test;
-//    for (j=0; j<10; j++)
-//    {
-//        write(bufor, flaga);
-//    }
-//    test = read_config();
-//    for (j=0; j<2; j++)
-//    {
-//        cout << test[j].IP << " " << test[j].TempConf << " " << test[j].MovPer << endl;
-//    }
-//}

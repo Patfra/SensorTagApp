@@ -7,36 +7,54 @@
 #include "rw.h"
 #include "gattlib/include/gattlib.h"// TO DO ogarnąć bibliotekę
 using namespace std;
-typedef enum { READ, WRITE} operation_t;
-operation_t g_operation;
-static uuid_t g_uuid;
-long int value_data;
 
 
-static void usage(char *argv[]) {
-    cout <<  argv[0] << " <device_address> <read|write> <uuid> [<hex-value-to-write>]\n";
-}
+
+//#include <stdio.h>  /* defines FILENAME_MAX */
+//#include <unistd.h>
+//#define GetCurrentDir getcwd
+//
+//string GetCurrentWorkingDir( void ) {
+//    char buff[FILENAME_MAX];
+//    GetCurrentDir( buff, FILENAME_MAX );
+//    string current_working_dir(buff);
+//    return current_working_dir;
+//}
+//
+//int main(){
+//    cout << endl << GetCurrentWorkingDir() << endl;
+//    return 1;
+//}
+
+
+
+
+
+
+
+
 
 int main(int argc, char *argv[]) {
 
-    uint32_t A;
-    cout << "Podaj liczbe elo:\n";
-    cin >> A;
-    float B = BaroConvert(A);
-    cout << B;
+
     float bufor[] = {12.5, 123.34, 67.3, 45.3, 22.0, 45.93, 456.6, 33.67};
     bool flaga = 0;
     int j;
     SensorTag *test;
-    for (j=0; j<10; j++)
-    {
-        write(bufor, flaga);
-    }
-    test = read_config();
+    int sensor_amount = 0;
+
+    test = read_config(&sensor_amount);
+
     for (j=0; j<2; j++)
     {
         cout << test[j].IP << " " << test[j].TempConf << " " << test[j].MovPer << endl;
     }
+    cout << sensor_amount<< endl;
+    for (j=0; j<sensor_amount; j++)
+    {
+        write(bufor, flaga, j+1, test[j].IP);
+    }
+
     return 0;
 }
 

@@ -27,8 +27,8 @@ struct SensorTag{
     int OptPer;
 };
 
-void write (float buff[], bool flag);
+void write (float buff[], bool flag, int ST_number, std::string ST_IP);
 
-SensorTag* read_config();
+SensorTag* read_config(int * sensor_amount);
 
 #endif //SENSORTAGAPP_RW_H
