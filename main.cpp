@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
         int flag= test[j].MovConf == 2?1:0;
         write(data_buf.front().get(), flag, j+1, test[j].IP);
     }
-
+    delete [] test;
     return 0;
 }
 

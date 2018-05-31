@@ -15,16 +15,12 @@
 struct SensorTag{
     std::string IP;
     bool TempConf;
-    int TempPer;
     int MovConf;
     int MovRange;
-    int MovPer;
     bool HumConf;
-    int HumPer;
     bool PressConf;
-    int PressPer;
     bool OptConf;
-    int OptPer;
+    int Per;
 };
 
 void write (float buff[], bool flag, int ST_number, std::string ST_IP);

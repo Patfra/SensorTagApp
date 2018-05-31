@@ -16,21 +16,18 @@ void write (float buff[], bool flag, int ST_number, string ST_IP) {
         time_t tt;
         tt = chrono::system_clock::to_time_t ( now);
         string t = ctime(&tt);
+        //t.substr(0, t.length()-1)  - uciecie \n na koncu
         file.seekg (0, ios::end);
         end = file.tellg();
-        if (end == 0)
-        {
+        if (end == 0) {
             file << "Data from SensorTag nr " << ST_number << " ., " << ST_IP << "\n";
-            if (flag == 0)
-            {
+            if (flag == 0) {
                 file << "Timestamp, ObjectTemp, AmbienceTemp, GyroX, GyroY, GyroZ, Humidity, Pressure, Brightness\n";
-            }
-            else
-            {
+            } else {
                 file << "Timestamp,ObjectTemp, AmbienceTemp, AccX, AccY, AccZ, Humidity, Pressure, Brightness\n";
             }
         }
-        file << t.substr(0, t.length()-1) <<",";
+        file << t.substr(0, t.length()-1) << ',';
         for(i = 0; i < 8 ; i++)  // TODO size of tab (hardcoded)
         {
             file << buff[i] << ",";
@@ -55,7 +52,7 @@ SensorTag* read_config(int * sensor_amount)
         getline(iss, token, ',');
         getline(iss, token, ',');
         *sensor_amount = stoi(token);
-        static SensorTag records[2];
+        SensorTag *records = new SensorTag[*sensor_amount];
         getline(file, data); // ignore second line
         while (getline(file, data))
         {
@@ -66,25 +63,17 @@ SensorTag* read_config(int * sensor_amount)
             getline(iss, token, ',');
             records[i].TempConf = stoi(token);
             getline(iss, token, ',');
-            records[i].TempPer = stoi(token);
-            getline(iss, token, ',');
             records[i].MovConf = stoi(token);
             getline(iss, token, ',');
             records[i].MovRange = stoi(token);
             getline(iss, token, ',');
-            records[i].MovPer = stoi(token);
-            getline(iss, token, ',');
             records[i].HumConf = stoi(token);
-            getline(iss, token, ',');
-            records[i].HumPer = stoi(token);
             getline(iss, token, ',');
             records[i].PressConf = stoi(token);
             getline(iss, token, ',');
-            records[i].PressPer = stoi(token);
-            getline(iss, token, ',');
             records[i].OptConf = stoi(token);
             getline(iss, token, ',');
-            records[i].OptPer = stoi(token);
+            records[i].Per = stoi(token);
             i++;
         }
         return records;
