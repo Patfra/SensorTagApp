@@ -5,7 +5,20 @@
 using namespace std;
 #include "rw.h"
 
-void write (float buff[], bool flag, int ST_number, string ST_IP) {
+
+string long2timestamp(long ms){
+    std::chrono::milliseconds dur(ms);
+    std::chrono::seconds s = std::chrono::duration_cast<std::chrono::seconds> (dur);
+    std::time_t t = s.count();
+    std::size_t fractional_seconds = ms% 1000;
+    string timestamp = ctime(&t), rest =  ":";
+    rest += to_string(fractional_seconds);
+    timestamp.insert(19, rest);
+    return timestamp;
+}
+
+
+void write(std::queue <Dane>* buffer, bool flag, int ST_number, string ST_IP){
     fstream file;
     int i;
     int end;
@@ -27,12 +40,22 @@ void write (float buff[], bool flag, int ST_number, string ST_IP) {
                 file << "Timestamp,ObjectTemp, AmbienceTemp, AccX, AccY, AccZ, Humidity, Pressure, Brightness\n";
             }
         }
-        file << t.substr(0, t.length()-1) << ',';
-        for(i = 0; i < 8 ; i++)  // TODO size of tab (hardcoded)
-        {
-            file << buff[i] << ",";
+        //file << t.substr(0, t.length()-1) <<",";
+        unsigned long buf_size=buffer->size();
+        cout << buf_size;
+        for (unsigned long j = 0; j < buf_size; ++j) {
+            float *buff=  buffer->front().get();
+            time_t ti = (time_t)(int)buff[0];
+            string t = ctime(&ti);
+            file <<  t.substr(0, t.length()-1) << ",";
+            for(i = 1; i < 9 ; i++)  // TODO size of tab (hardcoded) - %PF zminiłme tutaj trochę
+            {
+                file << buff[i] << ",";
+            }
+            file << endl;
+            buffer->pop();
+
         }
-        file << endl;
         file.close();
     }
     else cout << "Unable to open file" << endl;

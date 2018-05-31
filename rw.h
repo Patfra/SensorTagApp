@@ -12,6 +12,10 @@
 #include <sstream>
 #include <ctime>
 
+#include "objects.h"
+
+std::string long2timestamp(long ms);
+
 struct SensorTag{
     std::string IP;
     bool TempConf;
@@ -23,7 +27,7 @@ struct SensorTag{
     int Per;
 };
 
-void write (float buff[], bool flag, int ST_number, std::string ST_IP);
+void write(std::queue <Dane>* buffer, bool flag, int ST_number, std::string ST_IP);
 
 SensorTag* read_config(int * sensor_amount);
 
