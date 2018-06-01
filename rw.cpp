@@ -18,18 +18,13 @@ string long2timestamp(long ms){
 }
 
 
-void write(std::queue <Dane>* buffer, bool flag, int ST_number, string ST_IP){
+void write(std::queue <ST_Data>* buffer, bool flag, int ST_number, string ST_IP){
     fstream file;
     int i;
     int end;
     file.open ("../ST_"+ std::to_string(ST_number) + "_data_out.csv" , ios::app);
     if (file.is_open())
     {
-        chrono::system_clock::time_point now = chrono::system_clock::now();
-        time_t tt;
-        tt = chrono::system_clock::to_time_t ( now);
-        string t = ctime(&tt);
-        //t.substr(0, t.length()-1)  - uciecie \n na koncu
         file.seekg (0, ios::end);
         end = file.tellg();
         if (end == 0) {
@@ -40,15 +35,16 @@ void write(std::queue <Dane>* buffer, bool flag, int ST_number, string ST_IP){
                 file << "Timestamp,ObjectTemp, AmbienceTemp, AccX, AccY, AccZ, Humidity, Pressure, Brightness\n";
             }
         }
-        //file << t.substr(0, t.length()-1) <<",";
+
         unsigned long buf_size=buffer->size();
-        cout << buf_size;
+        float *buff;
+
+        cout << buf_size << endl;
         for (unsigned long j = 0; j < buf_size; ++j) {
-            float *buff=  buffer->front().get();
-            time_t ti = (time_t)(int)buff[0];
-            string t = ctime(&ti);
-            file <<  t.substr(0, t.length()-1) << ",";
-            for(i = 1; i < 9 ; i++)  // TODO size of tab (hardcoded) - %PF zminiłme tutaj trochę
+            buff =  buffer->front().get_data();
+            string t = long2timestamp(buffer->front().get_timestamp());
+            file <<  t.substr(0, t.length()-1) << ",";  //t.substr(0, t.length()-1)  - uciecie \n na koncu
+            for(i = 1; i < buffer->front().size_buf() ; i++)  // TODO size of tab (hardcoded) - %PF zminiłme tutaj trochę, teraz jest pobieran długość z obiektu
             {
                 file << buff[i] << ",";
             }

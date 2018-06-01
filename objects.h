@@ -10,18 +10,20 @@
 #include <unistd.h>
 #include <chrono>
 
-class Dane
+class ST_Data
 {
 private:
-    float buffer[9];
-    int size = 9;
+    float buffer[8];
+    long timestamp;
+    int size = 8;
 public:
-    float * get(){ return buffer;};
-
-    void  set(float * buf);
-    friend std::ostream & operator<< (std::ostream &wyjscie, const Dane &s);
+    float * get_data(){ return buffer;};
+    int     size_buf(){ return size;};
+    long    get_timestamp(){return timestamp;};
+    void    set(float * buf, long timestamp_new);
+    friend  std::ostream & operator<< (std::ostream &wyjscie, const ST_Data &s);
 };
 
-void random_dane(std::queue <Dane>* kolejka, int n);
+void random_dane(std::queue <ST_Data>* kolejka, int n);
 
 #endif //SENSORTAGAPP_OBJECTS_H

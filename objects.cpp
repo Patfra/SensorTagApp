@@ -6,32 +6,35 @@
 
 using namespace std;
 
-void Dane::set(float * buf){
+void ST_Data::set(float * buf, long timestamp_new){
     int i = 0;
     while(i <= 9)
     {
         buffer[i] = buf[i];
         i++;
     }
+    timestamp=timestamp_new;
 }
 
 
 
-void random_dane(queue <Dane>* kolejka, int n){
-    Dane new_buf;
+void random_dane(queue <ST_Data>* kolejka, int n){
+    ST_Data new_buf;
     for(int i = 0; i < n; i++) {
-        float tmp[] = {(float)(int)(chrono::system_clock::to_time_t (chrono::system_clock::now())),
-                       rand()%100,rand()%100,rand()%100,rand()%100,
+        float tmp[] = {rand()%100,rand()%100,rand()%100,rand()%100,
                        rand()%100,rand()%100,rand()%100,rand()%100};
-        new_buf.set(tmp);
+        chrono::milliseconds ms = chrono::duration_cast< chrono::milliseconds >( chrono::system_clock::now().time_since_epoch());
+        long milis = ms.count();
+        new_buf.set(tmp,milis);
         usleep(200000);
         kolejka->push(new_buf);
     }
 }
 
-ostream & operator<< (ostream &wyjscie, const Dane &s) {
+ostream & operator<< (ostream &wyjscie, const ST_Data &s) {
     int i = 0;
-    while(i <= 9)
+    wyjscie << s.timestamp << ' ';
+    while(i <= s.size)
     {
         wyjscie << s.buffer[i] << ' ';
         i++;

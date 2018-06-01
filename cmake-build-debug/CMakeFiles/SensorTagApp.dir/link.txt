@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/SensorTagApp.dir/main.cpp.o CMakeFiles/SensorTagApp.dir/conversions.cpp.o  -o SensorTagApp -Wl,-rpath,/home/patryk/Dokumenty/SensorTagApp/gattlib/build/dbus ../gattlib/build/dbus/libgattlib.so 

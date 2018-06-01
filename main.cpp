@@ -16,10 +16,9 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    queue <Dane> *data_buf;
-    Dane buffer;
-//    queue <Dane> data_buf;
-//    Dane buffer;
+    queue <ST_Data> *data_buf;
+//    queue <ST_Data> data_buf;
+//    ST_Data buffer;
 //    float buf[]={1000.0, 12.5,123.34,67.3,45.3,22,45.93,456.6,33.67};
 //    buffer.set(buf);
 //    cout<< buffer;
@@ -31,7 +30,7 @@ int main(int argc, char *argv[]) {
     // Wczytywanie pliku konfiguracyjnego
     test = read_config(&sensor_amount);
 
-    data_buf=new queue <Dane>[sensor_amount];
+    data_buf=new queue <ST_Data>[sensor_amount];
 
     cout << sensor_amount<< endl<< endl<< endl;
 
