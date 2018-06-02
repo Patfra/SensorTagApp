@@ -49,6 +49,6 @@ int write2sensor(gatt_connection_t* connection, char * char_name ,int char_value
 int write2sensor(gatt_connection_t* connection, int char_value, int char_range);
 
 
-int config_st(SensorTag* sensors, int sensors_amount);
+gatt_connection_t ** config_st(SensorTag* sensors, int sensors_amount);
 
 #endif //SENSORTAGAPP_CONFIG_ST_H

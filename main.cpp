@@ -25,39 +25,48 @@ int main(int argc, char *argv[]) {
 //    cout<< buffer;
 //    data_buf.push(buffer);
 
-    SensorTag *test;                //To jest tablica Sensortagow
-    int sensor_amount = 0;          //Ilość urządzeń
-    cout << "witam" <<endl;
-    // Wczytywanie pliku konfiguracyjnego
-    test = read_config(&sensor_amount);
+    SensorTag *test;                    //To jest tablica Sensortagow
+    int sensor_amount = 0;              //Ilość urządzeń
+    gatt_connection_t ** connections;   //Tablica wsakźników na połącznia z ST
+    try{
+        // Wczytywanie pliku konfiguracyjnego
+        test = read_config(&sensor_amount);
 
-    data_buf=new queue <ST_Data>[sensor_amount];
+        gatt_connection_t ** connections = new gatt_connection_t*[sensor_amount];
 
-    cout << sensor_amount<< endl<< endl<< endl;
+        data_buf=new queue <ST_Data>[sensor_amount];
 
-    //Łączenie z sensorami + konfiguracja ich
+        cout << sensor_amount<< endl<< endl<< endl;
 
-    cout << config_st(test,sensor_amount) <<endl;
+        //Łączenie z sensorami + konfiguracja ich
 
-    //Generacja randomowych danych do listy
-    for (int i = 0; i < sensor_amount; ++i) {
+        connections = config_st(test,sensor_amount);
 
-        random_dane(&(data_buf[i]),rand()%20 +1);
-    }
+        //Generacja randomowych danych do listy
+        for (int i = 0; i < sensor_amount; ++i) {
 
-
-    // Zapisywanie do pliku
-
-    for (int j=0; j<sensor_amount; j++)
-    {
-        while(!data_buf[j].empty()){
-            write(&(data_buf[j]), test[j], j+1);
+            random_dane(&(data_buf[i]),rand()%20 +1);
         }
 
-    }
 
+        // Zapisywanie do pliku
+
+        for (int j=0; j<sensor_amount; j++)
+        {
+            while(!data_buf[j].empty()){
+                write(&(data_buf[j]), test[j], j+1);
+            }
+
+        }
+    }
+    catch(...){
+        delete [] test;
+        delete [] connections;
+        return 1;
+    }
     delete [] test;
-    //delete data_buf;
+    delete [] connections;
+    delete data_buf;
     return 0;
 }
 

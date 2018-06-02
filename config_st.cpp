@@ -104,7 +104,7 @@ char * mov2write(int mov_conf,int acc_range){
     return str_mov;
 }
 
-//Ta funkcja pociera jedno z makr zdefiniowanych w config_st.h i zwraca string odpowiadający danemu UUID
+//Ta funkcja pobiera jedno z makr zdefiniowanych w config_st.h i zwraca string odpowiadający danemu UUID
 char * mergeUuid(string* str2){
     string str1 = ST_UUID_TEMPLATE;
     int n = str2->length();
@@ -116,7 +116,7 @@ char * mergeUuid(string* str2){
 
 
 //Łączenie z  ST i ich konfiguracja
-int config_st(SensorTag* sensors, int sensors_amount){
+gatt_connection_t ** config_st(SensorTag* sensors, int sensors_amount){
 
     uint8_t * buffer;
     int i, ret;
@@ -140,7 +140,7 @@ int config_st(SensorTag* sensors, int sensors_amount){
             connection[j] = gattlib_connect(NULL, addr, BDADDR_LE_RANDOM, BT_SEC_LOW, 0, 0);
             if (connection[j] == NULL) {
                 fprintf(stderr, "Fail to connect to the bluetooth device.\n");
-                return 1;
+                return connection;
             } else {
                 puts("Succeeded to connect to the bluetooth device with random address.");
             }
@@ -170,11 +170,11 @@ int config_st(SensorTag* sensors, int sensors_amount){
         ret = write2sensor(connection[j], (char *)ST_UUID_MOV_PERIOD, sensors[j].Per);
         assert(ret == 0);
         //Tu się na razie rozłączam ale zrobi się że tablica connected zostanie przekazan do maina i użyta w wątkach.
-        gattlib_disconnect(connection[j]);
+        //gattlib_disconnect(connection[j]);
 
     }
     //konfiguracja skończona
-    return 0;
+    return connection;
 
 
 }
