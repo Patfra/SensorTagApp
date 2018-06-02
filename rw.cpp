@@ -18,7 +18,7 @@ string long2timestamp(long ms){
 }
 
 
-void write(std::queue <ST_Data>* buffer, bool flag, int ST_number, string ST_IP){
+void write(std::queue <ST_Data>* buffer, SensorTag config, int ST_number){
     fstream file;
     int i;
     int end;
@@ -28,8 +28,8 @@ void write(std::queue <ST_Data>* buffer, bool flag, int ST_number, string ST_IP)
         file.seekg (0, ios::end);
         end = file.tellg();
         if (end == 0) {
-            file << "Data from SensorTag nr " << ST_number << " ., " << ST_IP << "\n";
-            if (flag == 0) {
+            file << "Data from SensorTag nr " << ST_number << " ., " << config.IP << "\n";
+            if (config.MovConf == 0 || config.MovConf == 1) {
                 file << "Timestamp, ObjectTemp, AmbienceTemp, GyroX, GyroY, GyroZ, Humidity, Pressure, Brightness\n";
             } else {
                 file << "Timestamp,ObjectTemp, AmbienceTemp, AccX, AccY, AccZ, Humidity, Pressure, Brightness\n";
@@ -43,11 +43,27 @@ void write(std::queue <ST_Data>* buffer, bool flag, int ST_number, string ST_IP)
         for (unsigned long j = 0; j < buf_size; ++j) {
             buff =  buffer->front().get_data();
             string t = long2timestamp(buffer->front().get_timestamp());
-            file <<  t.substr(0, t.length()-1) << ",";  //t.substr(0, t.length()-1)  - uciecie \n na koncu
-            for(i = 1; i < buffer->front().size_buf() ; i++)  // TODO size of tab (hardcoded) - %PF zminiłme tutaj trochę, teraz jest pobieran długość z obiektu
-            {
-                file << buff[i] << ",";
-            }
+            file <<  t.substr(0, t.length()-1) << ",";
+            if (config.TempConf == 0)
+                file << "*" << "," << "*" << ",";
+            else
+                file << buff[1] << "," << buff[2] << ",";
+            if (config.MovConf == 0)
+                file << "*" << "," << "*" << "," << "*" << ",";
+            else
+                file << buff[3] << "," << buff[4] << "," << buff[5] << ",";
+            if (config.HumConf == 0)
+                file << "*" << ",";
+            else
+                file << buff[6] << ",";
+            if (config.PressConf == 0)
+                file << "*" << ",";
+            else
+                file << buff[7] << ",";
+            if (config.OptConf == 0)
+                file << "*" << ",";
+            else
+                file << buff[8] << ",";
             file << endl;
             buffer->pop();
 

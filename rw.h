@@ -27,7 +27,7 @@ struct SensorTag{
     int Per;
 };
 
-void write(std::queue <ST_Data>* buffer, bool flag, int ST_number, std::string ST_IP);
+void write(std::queue <ST_Data>* buffer, SensorTag config, int ST_number);
 
 SensorTag* read_config(int * sensor_amount);
 

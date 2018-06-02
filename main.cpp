@@ -64,9 +64,8 @@ int main(int argc, char *argv[]) {
 
     for (int j=0; j<sensor_amount; j++)
     {
-        int flag= test[j].MovConf == 2?1:0;
-        while(data_buf[j].empty() != true){
-            write(&(data_buf[j]), flag, j+1, test[j].IP);
+        while(!data_buf[j].empty()){
+            write(&(data_buf[j]), test[j], j+1);
         }
 
     }
