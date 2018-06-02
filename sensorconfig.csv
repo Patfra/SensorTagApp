@@ -1,4 +1,4 @@
 Amount,2
 Configuration,IP Address,Temp Conf,Mov Conf,Mov Range,Hum Conf,Press Conf,Opt Conf,Period
-Sensor1,23.43.23.2,1,2,1,1,0,1,600
-Sensor2,23.45.3.2,1,0,0,0,0,1,400
+Sensor1,4B:FE:F2:AC:47:8B,1,2,1,1,0,1,600
+Sensor2,52:5E:48:22:EF:CE,1,0,0,0,0,1,400

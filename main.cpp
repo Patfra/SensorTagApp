@@ -3,12 +3,13 @@
 //
 
 //Biblioteki zewnętrzne
-#include "gattlib/include/gattlib.h"
+
 
 //Nasze biblioteki
 #include "conversions.h"
 #include "rw.h"
 #include "objects.h"
+#include "config_st.h"
 
 
 
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]) {
 
     SensorTag *test;                //To jest tablica Sensortagow
     int sensor_amount = 0;          //Ilość urządzeń
-
+    cout << "witam" <<endl;
     // Wczytywanie pliku konfiguracyjnego
     test = read_config(&sensor_amount);
 
@@ -34,33 +35,18 @@ int main(int argc, char *argv[]) {
 
     cout << sensor_amount<< endl<< endl<< endl;
 
+    //Łączenie z sensorami + konfiguracja ich
+
+    cout << config_st(test,sensor_amount) <<endl;
+
     //Generacja randomowych danych do listy
     for (int i = 0; i < sensor_amount; ++i) {
 
         random_dane(&(data_buf[i]),rand()%20 +1);
     }
 
-    //TODO %PF Testowanie czasu. Ja to kiedyś usunę, na razie zakomentowane jest
-//    using namespace std::chrono;
-//    for (int k = 0; k < 10; ++k) {
-//        milliseconds ms = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
-//        long milis = ms.count();
-//        string czas = long2timestamp(milis);
-//        std::cout << czas << std::endl;
-//        usleep(2000);
-//    }
-
-
 
     // Zapisywanie do pliku
-//    for(int i = 0 ; i < 9; i++)
-//        cout << data_buf.front();
-//
-//    for (int j=0; j<sensor_amount; j++)
-//    {
-//        int flag= test[j].MovConf == 2?1:0;
-//        write(data_buf.front().get(), flag, j+1, test[j].IP);
-//    }
 
     for (int j=0; j<sensor_amount; j++)
     {
