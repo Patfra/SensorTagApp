@@ -27,6 +27,10 @@
 #define ST_UUID_MOV_CONFIGURATION   "AA82"
 #define ST_UUID_MOV_PERIOD          "AA83"
 
+#define ST_UUID_OPT_DATA            "AA71"
+#define ST_UUID_OPT_CONFIGURATION   "AA72"
+#define ST_UUID_OPT_PERIOD          "AA73"
+
 #define ST_ENABLE_2B        "0x01"
 #define ST_ENABLE_4B        "0x0001"
 #define ST_DISABLE_2B       "0x00"
