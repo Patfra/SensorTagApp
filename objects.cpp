@@ -26,7 +26,7 @@ void random_dane(queue <ST_Data>* kolejka, int n){
         chrono::milliseconds ms = chrono::duration_cast< chrono::milliseconds >( chrono::system_clock::now().time_since_epoch());
         long milis = ms.count();
         new_buf.set(tmp,milis);
-        usleep(200000);
+        //usleep(200000);
         kolejka->push(new_buf);
     }
 }

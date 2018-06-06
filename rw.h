@@ -27,7 +27,16 @@ struct SensorTag{
     int Per;
 };
 
-void write(std::queue <ST_Data>* buffer, SensorTag config, int ST_number);
+struct Write_data{
+    SensorTag* Czujnik;
+    int size;
+    std::queue <ST_Data> *kolejka;
+
+};
+
+bool write2onefile(std::queue<ST_Data>* buffer, SensorTag* config, int ST_number, std::fstream* file);
+
+void * write(void* args);
 
 SensorTag* read_config(int * sensor_amount);
 

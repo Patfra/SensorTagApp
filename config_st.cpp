@@ -41,7 +41,6 @@ int write2sensor(gatt_connection_t* connection, char * char_name ,int char_value
     //cout << tmp_uuid << ' ' << value  << endl;  //do debugowania
     return gattlib_write_char_by_uuid(connection, &g_uuid, value, sizeof(value));
 }
-
 int write2sensor(gatt_connection_t* connection, int char_value, int char_range) {
 
     char * tmp_uuid;
@@ -54,7 +53,6 @@ int write2sensor(gatt_connection_t* connection, int char_value, int char_range) 
     //cout << tmp_uuid << ' ' << value  << endl; //do debugowania
     return gattlib_write_char_by_uuid(connection, &g_uuid, value, sizeof(value));
 }
-
 
 //Zamiana milisekund na wartoś w hex
 char * period2write(int period){
@@ -118,7 +116,7 @@ char * mergeUuid(string* str2){
 //Łączenie z  ST i ich konfiguracja
 gatt_connection_t ** config_st(SensorTag* sensors, int sensors_amount){
 
-    uint8_t * buffer;
+    uint8_t * buffer[100];
     int i, ret;
     size_t len;
     //Tablica połączeń
@@ -127,8 +125,6 @@ gatt_connection_t ** config_st(SensorTag* sensors, int sensors_amount){
 //        fprintf(stderr, "Wrong characteristic.\n");
 //        return 1;
 //    }
-
-
 
     // Konfiguracja
     for (int j = 0; j < sensors_amount; ++j) {
@@ -149,6 +145,14 @@ gatt_connection_t ** config_st(SensorTag* sensors, int sensors_amount){
         }
         cout << "Connected to " << sensors[0].IP.c_str() << endl;
         //TEMPERATURA
+
+
+        //ret = write2sensor(connection[j], (char *)ST_UUID_TEMP_CONFIGURATION, sensors[j].TempConf);
+        //char *tmp_uuid ="f000aa01-0451-4000-b000-000000000000";
+        char * tmp_uuid = "00002a38-0000-1000-8000-00805f9b34fb";
+        gattlib_string_to_uuid(tmp_uuid, strlen(tmp_uuid) + 1, &g_uuid);
+        ret =gattlib_read_char_by_uuid(connection[j], &g_uuid, buffer, &len);
+        cout << buffer << endl << len<< endl;
         ret = write2sensor(connection[j], (char *)ST_UUID_TEMP_CONFIGURATION, sensors[j].TempConf);
         assert(ret == 0);
         //CIŚNIENIE
@@ -171,6 +175,10 @@ gatt_connection_t ** config_st(SensorTag* sensors, int sensors_amount){
         assert(ret == 0);
         //Tu się na razie rozłączam ale zrobi się że tablica connected zostanie przekazan do maina i użyta w wątkach.
         //gattlib_disconnect(connection[j]);
+
+    }
+    while(1)
+    {
 
     }
     //konfiguracja skończona

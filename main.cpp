@@ -10,7 +10,7 @@
 #include "rw.h"
 #include "objects.h"
 #include "config_st.h"
-
+#include "watki.h"
 
 
 using namespace std;
@@ -40,24 +40,29 @@ int main(int argc, char *argv[]) {
 
         //Łączenie z sensorami + konfiguracja ich
 
-        connections = config_st(test,sensor_amount);
+        //connections = config_st(test,sensor_amount);
+
+
+        //Tworzenie wątków
+
+        create_threads(sensor_amount,test,data_buf,connections);
 
         //Generacja randomowych danych do listy
-        for (int i = 0; i < sensor_amount; ++i) {
-
-            random_dane(&(data_buf[i]),rand()%20 +1);
-        }
+//        for (int i = 0; i < sensor_amount; ++i) {
+//
+//            random_dane(&(data_buf[i]),rand()%20 +1);
+//        }
 
 
         // Zapisywanie do pliku
 
-        for (int j=0; j<sensor_amount; j++)
-        {
-            while(!data_buf[j].empty()){
-                write(&(data_buf[j]), test[j], j+1);
-            }
-
-        }
+//        for (int j=0; j<sensor_amount; j++)
+//        {
+//            while(!data_buf[j].empty()){
+//                write(&(data_buf[j]), test[j], j+1);
+//            }
+//
+//        }
     }
     catch(...){
         delete [] test;
