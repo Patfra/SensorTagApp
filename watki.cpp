@@ -4,11 +4,11 @@
 
 #include "watki.h"
 #include "rw.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <pthread.h>
-#include <string.h>
-#include <time.h>
+#include <cstring>
+#include <ctime>
 #include <unistd.h>
 #include <vector>
 #include <iostream>
@@ -19,7 +19,7 @@ using namespace std;
 
 void *timed_loop(void* dane){ //argumentem jest tablica struktur SensorTag
 //    clock_t time = clock();
-    Argument* struktura = (Argument*)dane;
+    auto struktura = (Argument*)dane;
     SensorTag* czujnik = struktura->Czujnik;
     queue <ST_Data>* results = struktura->kolejka;
     gatt_connection_t *conn = struktura->polaczenia;
@@ -110,7 +110,7 @@ void *timed_loop(void* dane){ //argumentem jest tablica struktur SensorTag
 //        //OPTICAL READ END-------------
 //        bufor.set(wyniki,milis);
 //        results->push(bufor);
-        usleep(czujnik->Per*1000);
+        usleep((__useconds_t)czujnik->Per*1000);
         //PRZEKAZANIE WARTOŚCI
 
     }
@@ -129,7 +129,7 @@ void create_threads(int amount, SensorTag* strukturki, queue <ST_Data> *kju, gat
     }
 
     for(int j=0;j< amount;j ++){ //stworzenie struktury, podawanej jako argumenty
-        Argument struktura;
+        auto struktura = Argument();
         struktura.kolejka = &kju[j];
         struktura.Czujnik = &strukturki[j];
         struktura.polaczenia = conns[j];
@@ -138,19 +138,19 @@ void create_threads(int amount, SensorTag* strukturki, queue <ST_Data> *kju, gat
 
 
     for(int k=0;k<amount;k++){ //odpalenie wątków
-        pthread_create(&threadz[k],NULL,timed_loop,&argumenty[k]);
+        pthread_create(&threadz[k], nullptr,timed_loop,&argumenty[k]);
     }
 
     //Wątek dla zapisu anych do CSV
 
-    Write_data wd ;
+    auto wd = Write_data();
     wd.kolejka = kju;
     wd.Czujnik = strukturki;
     wd.size = amount;
 
     pthread_t threaddy;
     threadz.push_back(threaddy);
-    pthread_create(&threadz[threadz.size()-1],NULL,write, &wd);
+    pthread_create(&threadz[threadz.size()-1],nullptr,write, &wd);
 
     //Zatrzymywanie zbierania danych
     cout << "Press any key to stop gathering data" << endl;
@@ -160,9 +160,8 @@ void create_threads(int amount, SensorTag* strukturki, queue <ST_Data> *kju, gat
 
 
     for(int l=0;l<amount+1;l++){//join, niezbędny do działania ammount +1 bo wątek dla zapisywania
-        pthread_join(threadz[l], NULL);
+        pthread_join(threadz[l], nullptr);
     }
-
 }
 
 void make_uuid(char* what_to_read, uuid_t new_uuid){

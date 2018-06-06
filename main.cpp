@@ -28,24 +28,22 @@ int main(int argc, char *argv[]) {
     SensorTag *test;                    //To jest tablica Sensortagow
     int sensor_amount = 0;              //Ilość urządzeń
     gatt_connection_t ** connections;   //Tablica wsakźników na połącznia z ST
-    try{
-        // Wczytywanie pliku konfiguracyjnego
-        test = read_config(&sensor_amount);
+//    try{
+    // Wczytywanie pliku konfiguracyjnego
+    test = read_config(&sensor_amount);
 
-        gatt_connection_t ** connections = new gatt_connection_t*[sensor_amount];
+    data_buf = new queue <ST_Data>[sensor_amount];
 
-        data_buf=new queue <ST_Data>[sensor_amount];
+    cout << sensor_amount<< endl<< endl<< endl;
 
-        cout << sensor_amount<< endl<< endl<< endl;
+    //Łączenie z sensorami + konfiguracja ich
 
-        //Łączenie z sensorami + konfiguracja ich
-
-        //connections = config_st(test,sensor_amount);
+    connections = config_st(test,sensor_amount);
 
 
-        //Tworzenie wątków
+    //Tworzenie wątków
 
-        create_threads(sensor_amount,test,data_buf,connections);
+    create_threads(sensor_amount,test,data_buf,connections);
 
         //Generacja randomowych danych do listy
 //        for (int i = 0; i < sensor_amount; ++i) {
@@ -63,15 +61,16 @@ int main(int argc, char *argv[]) {
 //            }
 //
 //        }
-    }
-    catch(...){
-        delete [] test;
-        delete [] connections;
-        return 1;
-    }
+//    }
+//    catch(...){
+//        delete [] test;
+//        delete [] connections;
+//        return 1;
+//    }
+    cout << "---------CLOSING APP---------" <<endl;
     delete [] test;
     delete [] connections;
-    delete data_buf;
+    delete [] data_buf;
     return 0;
 }
 

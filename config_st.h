@@ -38,12 +38,11 @@
 
 const char HEX_TAB[]="0123456789ABCDEF";
 
-typedef enum { READ, WRITE} operation_t;
 char* mergeUuid(std::string* str2);
 
 //Funkcje zamianiające liczby na tablice z wartościami do zapisu do ST
 char *conf2write(bool bit , int size);
-char * period2write(int period);
+void period2write(int period, char * value);
 char *mov2write(int mov_conf, int acc_range);
 
 //Dwie funkcjie (bool dla konfiguracji i int dla perioda)

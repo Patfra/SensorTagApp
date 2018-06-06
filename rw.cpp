@@ -10,7 +10,7 @@ string long2timestamp(long ms){
     std::chrono::milliseconds dur(ms);
     std::chrono::seconds s = std::chrono::duration_cast<std::chrono::seconds> (dur);
     std::time_t t = s.count();
-    std::size_t fractional_seconds = ms% 1000;
+    long fractional_seconds = ms% 1000;
     string timestamp = ctime(&t), rest =  ":";
     rest += to_string(fractional_seconds);
     timestamp.insert(19, rest);
@@ -18,39 +18,39 @@ string long2timestamp(long ms){
 }
 
 
-void * write(void* dane){
+void * write(void* dane) {
 
 
     usleep(2000000);
-    Write_data *tmp = (Write_data*)dane;
-    queue<ST_Data> *buffer = tmp->kolejka;
-    SensorTag* config = tmp->Czujnik;
+    auto *tmp = (Write_data *) dane;
+    queue <ST_Data> *buffer = tmp->kolejka;
+    SensorTag *config = tmp->Czujnik;
     int ST_number = tmp->size;
-    fstream * file;
+    fstream *file;
     file = new fstream[ST_number];
     for (int j = 0; j < ST_number; ++j) {
-        file[j].open ("../ST_"+ std::to_string(j+1) + "_data_out.csv" , ios::app);
+        file[j].open("../ST_" + std::to_string(j + 1) + "_data_out.csv", ios::app);
     }
     int check_table = ST_number;
-    while(check_table > 0)
-    {
+    while (check_table > 0) {
         check_table = ST_number;
         for (int j = 0; j < ST_number; ++j) {
-            check_table-=(int)write2onefile(&buffer[j], &config[j], j+1, &file[j]);
+            check_table -= (int) write2onefile(&buffer[j], &config[j], j + 1, &file[j]);
         }
         usleep(5000000);
     }
+    delete[] file;
 }
 
 bool write2onefile(queue<ST_Data>* buffer, SensorTag* config, int ST_number, fstream* file)
 {
-    if (buffer->size() == 0){
+    if (buffer->empty()){
         cout << "bufer pusty" << endl;
         return true;
     }
     if (file->is_open()) {
         file->seekg(0, ios::end);
-        int end = file->tellg();
+        auto end = (int)file->tellg();
         if (end == 0) {
             *file << "Data from SensorTag nr " << ST_number << " ., " << config->IP << "\n";
             if (config->MovConf == 0 || config->MovConf == 1) {
@@ -118,7 +118,7 @@ SensorTag* read_config(int * sensor_amount){
         getline(iss, token, ',');
         getline(iss, token, ',');
         *sensor_amount = stoi(token);
-        SensorTag *records = new SensorTag[*sensor_amount];
+        auto *records = new SensorTag[*sensor_amount];
         getline(file, data); // ignore second line
         while (getline(file, data))
         {
@@ -127,17 +127,17 @@ SensorTag* read_config(int * sensor_amount){
             getline(iss, token, ',');
             records[i].IP = token;
             getline(iss, token, ',');
-            records[i].TempConf = stoi(token);
+            records[i].TempConf = (bool)stoi(token);
             getline(iss, token, ',');
             records[i].MovConf = stoi(token);
             getline(iss, token, ',');
             records[i].MovRange = stoi(token);
             getline(iss, token, ',');
-            records[i].HumConf = stoi(token);
+            records[i].HumConf = (bool)stoi(token);
             getline(iss, token, ',');
-            records[i].PressConf = stoi(token);
+            records[i].PressConf = (bool)stoi(token);
             getline(iss, token, ',');
-            records[i].OptConf = stoi(token);
+            records[i].OptConf = (bool)stoi(token);
             getline(iss, token, ',');
             records[i].Per = stoi(token);
             i++;
@@ -147,6 +147,6 @@ SensorTag* read_config(int * sensor_amount){
     else
     {
         cout << "Unable to open file" << endl;
-        return NULL;
+        return nullptr;
     }
 }

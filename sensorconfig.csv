@@ -1,4 +1,3 @@
-Amount,2
+Amount,1
 Configuration,IP Address,Temp Conf,Mov Conf,Mov Range,Hum Conf,Press Conf,Opt Conf,Period
-Sensor1,1A:E6:70:1A:32:C5,1,0,0,0,0,0,300
-Sensor1,2F:E6:70:1A:DE:F3,1,0,0,0,0,0,1000
+Sensor1,5A:C1:28:33:7B:52,1,0,0,0,0,0,300
