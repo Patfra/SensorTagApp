@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <chrono>
 
+//Class containing data of single measurement from all sensors
 class ST_Data
 {
 private:
@@ -24,6 +25,7 @@ public:
     friend  std::ostream & operator<< (std::ostream &wyjscie, const ST_Data &s);
 };
 
+//Function for generating random measurements for testing threads nad writing to multiple files at once
 void random_dane(std::queue <ST_Data>* kolejka, int n);
 
 #endif //SENSORTAGAPP_OBJECTS_H

@@ -41,7 +41,7 @@ void * write(void* dane) {
     }
     delete[] file;
 }
-
+//This function writes * where sensor is disabled
 bool write2onefile(queue<ST_Data>* buffer, SensorTag* config, int ST_number, fstream* file)
 {
     if (buffer->empty()){

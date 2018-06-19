@@ -10,8 +10,10 @@
 #include "objects.h"
 #include <queue>
 
+//Variable responsible for turning off the app
 static bool stop_app;
 
+//Special structure used in passing arguments to threads responsible for reading data
 struct Argument{
     SensorTag* Czujnik;
     //float* result;
@@ -19,9 +21,13 @@ struct Argument{
     gatt_connection_t *polaczenia;
 };
 
-
+//Special structure used in passing arguments to threads responsible for reading data
 void *timed_loop(void* args);
-void create_threads(int amount, SensorTag* strukturki, std::queue <ST_Data> *kju, gatt_connection_t ** conns);//tworzy wątki i je od razu odpala
+
+//Creating and enabling threads
+void create_threads(int amount, SensorTag* strukturki, std::queue <ST_Data> *kju, gatt_connection_t ** conns);
+
+//Debug function
 void make_uuid(char* what_to_read, uuid_t new_uuid);
 
 

@@ -14,8 +14,10 @@
 
 #include "objects.h"
 
+
 std::string long2timestamp(long ms);
 
+//Structure containing SensorTag desired configuration
 struct SensorTag{
     std::string IP;
     bool TempConf;
@@ -26,7 +28,7 @@ struct SensorTag{
     bool OptConf;
     int Per;
 };
-
+//Structure containing SensorTag desired configuration and buffer with read data
 struct Write_data{
     SensorTag* Czujnik;
     int size;
@@ -34,10 +36,13 @@ struct Write_data{
 
 };
 
+//Writing data to file
 bool write2onefile(std::queue<ST_Data>* buffer, SensorTag* config, int ST_number, std::fstream* file);
 
+//Special function which can be called by thread - responsible for periodically writing to file
 void * write(void* args);
 
+//Reading configuration from configuration file
 SensorTag* read_config(int * sensor_amount);
 
 #endif //SENSORTAGAPP_RW_H

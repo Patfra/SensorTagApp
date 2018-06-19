@@ -17,7 +17,7 @@ void ST_Data::set(float * buf, long timestamp_new){
 }
 
 
-
+//Function for generating random measurements for testing threads nad writing to multiple files at once
 void random_dane(queue <ST_Data>* kolejka, int n){
     ST_Data new_buf;
     for(int i = 0; i < n; i++) {
